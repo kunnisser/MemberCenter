@@ -1,0 +1,28 @@
+{"frames": {
+
+"manorBg.png":
+{
+	"frame": {"x":0,"y":0,"w":750,"h":1333},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":750,"h":1333},
+	"sourceSize": {"w":750,"h":1333}
+},
+"shopBg.png":
+{
+	"frame": {"x":750,"y":0,"w":698,"h":724},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":698,"h":724},
+	"sourceSize": {"w":698,"h":724}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "manorUi.png",
+	"format": "RGBA8888",
+	"size": {"w":1448,"h":1333},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1144e464ab9f78b3d6436315535988e5:fd2c910f64bbabebdf1a71f8f5d7b1b6:c829953496761e2fba653cef6daef9ff$"
+}
+}

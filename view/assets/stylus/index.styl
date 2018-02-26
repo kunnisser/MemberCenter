@@ -1,0 +1,130 @@
+@import "base.styl"
+@import "mixin.styl"
+@import "icon.styl"
+
+/* margin padding */
+.hd-ml40
+  margin-left px2rem(40)
+
+/* textarea */
+textarea
+  resize none
+  border none
+  outline none
+
+/* panel */
+.default-panel
+  display flex
+  padding px2rem(30)
+  width 100%
+  background-color #035aa8
+  border-radius px2rem(28)
+  border px2rem(8) solid #024a8d
+
+/* button */
+.echelon-box
+  width px2rem(178)
+  height px2rem(60)
+  line-height px2rem(60)
+  background url("assets/image/echelonBtn.png") no-repeat
+  background-size 100% 100%
+  padding-left px2rem(20)
+  color #fff
+  -webkit-text-stroke px2rem(2) #005600
+  font-size px2rem(30)
+  font-weight bold
+
+.btn-wrap
+  padding px2rem(34)
+  text-align center
+  & button
+    width px2rem(356)
+    height px2rem(82)
+    border-radius px2rem(16)
+    font-size px2rem(30)
+    font-weight bold
+    color #fff
+.btn-group
+  display flex
+  justify-content center
+  .btn-half-wrap
+    padding px2rem(34)
+    text-align center
+    & button
+      width px2rem(180)
+      height px2rem(50)
+      border-radius px2rem(6)
+      font-size px2rem(26)
+      font-weight bold
+      color #fff
+
+.footer-btn
+  width px2rem(322)
+  height px2rem(56)
+  background url("assets/image/footer-btn.png") no-repeat
+  background-size 100% 100%
+  position absolute
+  bottom 0
+  left 50%
+  margin-left px2rem(-161)
+  font-size px2rem(24)
+  font-weight bold
+  color #fff
+  -webkit-text-stroke px2rem(2) #b33600
+  text-align center
+  line-height px2rem(64)
+
+/* paybutton */
+.pay-bar
+  position absolute
+  left 0
+  bottom 0
+  width 100%
+  height px2rem(68)
+  background url("assets/image/paybar.png") no-repeat
+  background-size px2rem(640) px2rem(68)
+  box-shadow 0 px2rem(-2) px2rem(2) rgba(0,0,0,0.5)
+  .pay-info
+    width px2rem(444)
+    height px2rem(68)
+    padding-top px2rem(10)
+    text-align center
+    line-height px2rem(38)
+    & i
+      display inline-block
+      vertical-align middle
+      width px2rem(34)
+      height px2rem(32)
+      background url("assets/image/scorepay-icon.png") no-repeat
+      background-size 100% 100%
+    & span
+      vertical-align middle
+      color #fff
+      font-size px2rem(26)
+      font-weight bold
+      -webkit-text-stroke px2rem(2) #003b83
+  .echelon-box
+    position absolute
+    bottom 0
+    right px2rem(122)
+
+
+/* hobby */
+.score-hobby
+  & h2, & p
+    color #8e4700
+
+/* no-data */
+.no-data
+  margin-top px2rem(30)
+  width 100%
+  padding px2rem(30)
+  text-align center
+  min-height px2rem(200)
+  line-height px2rem(200)
+  border px2rem(4) dotted #fff
+  border-radius px2rem(12)
+  color #fff
+  font-size px2rem(50)
+  font-weight bold
+  -webkit-text-stroke px2rem(2) #b33600
