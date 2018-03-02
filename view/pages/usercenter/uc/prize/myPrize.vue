@@ -95,7 +95,8 @@
             let resp = await receivePrize(param);
             resp.data.code === 'success' && (this.setPoptips('领取成功'),
               this.pageData.prizeData[index].status = '1',
-              this.$store.state.ucInfo.myprize = resp.data.not_receive_num);
+              this.$store.state.ucInfo.myscore = resp.data.data.score,
+              this.$store.state.ucInfo.myprize = resp.data.data.not_receive_num);
             resp.data.code === 'overTime' && this.setPoptips('已过期');
             resp.data.code === 'allreadyReceived' && this.setPoptips('已经领取');
           } catch (e) {

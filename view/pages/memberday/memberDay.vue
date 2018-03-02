@@ -10,8 +10,10 @@
                 <div class="flex-header" :style="'background-image:url(' + JSON.parse(item.content).news_item[0].thumb_url + '); background-size:cover; background-repeat: no-repeat;'"></div>
                 <div class="flex-content">
                   <h3>{{JSON.parse(item.content).news_item[0].title}}</h3>
-                  <p></p>
-                  <div class="flex-bar">{{item.sendtime}}<div :class="'show-comments ' + (item.haveShared === 'haved' ? 'shared': '')" @click.prevent.stop="share(item.haveShared, item.media_id, item.content, $event)">
+                  <p>
+                    <span><i class="icon-database red"></i>{{share_score}}</span>
+                  </p>
+                  <div class="flex-bar">{{item.update_time}}<div :class="'show-comments ' + (item.haveShared === 'haved' ? 'shared': '')" @click.prevent.stop="share(item.haveShared, item.media_id, item.content, $event)">
                     <i class="icon-share-alternitive"></i><span>立即分享</span>
                   </div></div>
                 </div>
@@ -41,6 +43,7 @@
         </v-mdlist>
       </div>
       <v-share ref="share" :shareVisible="shareVisible" :content="content" @closeShareMask="closeShare"></v-share>
+      <v-footer :activeIndex="activeIndex"></v-footer>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -48,10 +51,13 @@
   import MdList from './mdlist/mdList';
   import {getShareTn, getActivity, shareApi} from 'mock/getMocks';
   import Share from 'components/share/share';
+  import Footer from 'components/footer/footerMenu';
     export default {
       name: 'memberDay',
       data () {
         return {
+          nowTime: (new Date()).getTime(),
+          activeIndex: 3,
           pageData: {
             navIndex: 0,
             currentTab: 'shareday',
@@ -85,6 +91,7 @@
           ],
           total: null,
           num: null,
+          share_score: null,
           shareVisible: !1,
           content: ''
         };
@@ -112,6 +119,7 @@
           this.listData[0].list = d.list;
           this.total = d.total;
           this.num = d.num;
+          this.share_score = d.share_score;
         },
         dispatchData2 (d) {
           this.listData[2].list = d.list;
@@ -141,7 +149,8 @@
       components: {
         'v-topnav': TopNav,
         'v-mdlist': MdList,
-        'v-share': Share
+        'v-share': Share,
+        'v-footer': Footer
       }
     };
 </script>
@@ -175,16 +184,15 @@
             flex 1
             margin-left px2rem(36)
             & h3
-              width 100%
-              height px2rem(48)
-              line-height px2rem(48)
-              font-size px2rem(28)
+              width px2rem(410)
+              height px2rem(64)
               overflow hidden
-              text-overflow ellipsis
-              white-space nowrap
+              text-align justify
+              line-height px2rem(32)
+              font-size px2rem(28)
             & p
-              height px2rem(80)
-              line-height px2rem(80)
+              height px2rem(70)
+              line-height px2rem(70)
               font-size px2rem(20)
               color #474747
               & span

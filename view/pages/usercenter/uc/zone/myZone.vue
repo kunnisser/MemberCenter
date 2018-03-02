@@ -1,7 +1,7 @@
 <template>
     <div class="zone-wrap">
       <v-topnav :navIndex="pageData.navIndex" :navData="pageData.navData" @linkNav="linkZone"></v-topnav>
-      <div class="zone-box">
+      <div class="zone-box zone-box-all" style="bottom:0;">
         <div class="zone-travelNote" v-show="pageData.currentTab === 'travelNote'">
           <v-scroll ref="travelNote" v-if="!pageData.noteNodata" :loadMore="true" :loadstatus="pageData.loadstatus" @scrollEndHandle="loadMore">
             <div slot="scrolllist">
@@ -42,9 +42,11 @@
                       ref="uploader"
                       :crop="false"
                       @imageuploaded="uploadPic"
-                      :max-file-size="5242880"
+                      @errorhandle="uploadErr"
+                      :maxFileSize="819200"
                       :multiple="true"
-                      :multiple-size="9"
+                      :multipleSize="9"
+                      :compress="25"
                       :url="uploaderApi" >
                     </vue-core-image-upload>
                     <i class="icon-plus"></i>
@@ -75,9 +77,11 @@
                 class="btn btn-primary"
                 :crop="false"
                 @imageuploaded="uploadPic"
-                :max-file-size="5242880"
+                @errorhandle="uploadErr"
+                :maxFileSize="819200"
                 :multiple="true"
-                :multiple-size="9"
+                :multipleSize="9"
+                :compress="25"
                 :url="uploaderApi" >
               </vue-core-image-upload></button>
           </div>
@@ -88,7 +92,7 @@
             <v-scroll v-else ref="feedback" :loadMore="true" :loadstatus="pageData.loadstatus" @scrollEndHandle="loadFeedMore">
               <div slot="scrolllist" class="feed-list" v-show="pageData.feedArr.length">
                 <div class="feed-item" v-for="(item, index) in pageData.feedArr">
-                  <h3 :class="index === pageData.respIndex ? 'resp': ''" @click.prevent.stop="toggleResp(index, $event)">{{(index + 1) + ' ' +item.detail}}<i v-if="item.is_reply" class="icon-check-circle"></i></h3>
+                  <h3 :class="index === pageData.respIndex ? 'resp': ''" @click.prevent.stop="toggleResp(index, $event)">{{(index + 1) + '、' +item.detail}}<i v-if="item.is_reply" class="icon-check-circle"></i></h3>
                   <div :class="'resp-wrap ' + (index === pageData.respIndex ? 'open' : '')" v-if="item.is_reply">
                     <p>{{item.reply}}</p>
                   </div>
@@ -119,7 +123,7 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-  import {basePath, prostatus} from '../../../../utils/env';
+  import {basePath} from '../../../../utils/env';
   import TopNav from 'components/navbar/topnav';
   import {getUserTravelNote, thumbUpTravelNote,
     inquireTnPhotos, deleteTnPhotos, addUserFeed,
@@ -175,7 +179,7 @@
           tipvisible: !1,
           commitFlag: !1,
           tiptext: '',
-          uploaderApi: basePath + (prostatus === 'development' ? '/api/photoWeb/savePhoto' : '/xxgmc/photoWeb/savePhoto')
+          uploaderApi: basePath + '/xxgmc/photoWeb/savePhoto'
         };
       },
       created () {
@@ -225,7 +229,7 @@
             this.pageData.notelist = this.pageData.notelist.concat(this.pageData.currentNoteArr);
             this.$nextTick(() => {
               this.$refs.travelNote && this.$refs.travelNote.scroll && this.$refs.travelNote.refresh();
-              this.pageData.tapNav && this.$refs[this.pageData.currentTab] && this.$refs[this.pageData.currentTab].scroll.scrollTo(0, 0);
+              index === 1 && this.pageData.tapNav && this.$refs[this.pageData.currentTab] && this.$refs[this.pageData.currentTab].scroll.scrollTo(0, 0);
             });
             this.pageData.noteNodata = !this.pageData.notelist.length;
           } catch (e) {
@@ -322,6 +326,9 @@
           } catch (e) {
             this.showMessage('网络连接失败！');
           }
+        },
+        uploadErr (res) {
+          this.showMessage(res);
         },
         loadMorePhotos () {
           this.pageData.tapNav = !1;
@@ -690,6 +697,8 @@
                 padding-top px2rem(20)
                 line-height px2rem(50)
                 position relative
+                padding-right px2rem(30)
+                text-align justify
                 &.resp
                   color #17a1e5
               & i
@@ -709,6 +718,7 @@
                   height px2rem(200)
                 & p
                   padding px2rem(20)
+                  line-height px2rem(34)
                   text-align justify
         .suggestion-bar
           height px2rem(524)

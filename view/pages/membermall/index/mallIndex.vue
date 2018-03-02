@@ -1,12 +1,13 @@
 <template>
     <div class="mall-wrap">
-      <div class="mall-banner" style="background-repeat: no-repeat; background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516600086897&di=d8a0854f264d7301b7f8549f50f6ffdf&imgtype=0&src=http%3A%2F%2Fwww.ltfjgg.com%2Fuser%2Fzggggs%2F%25E5%2585%25AC%25E5%2585%25B3%25E5%258F%258A%25E6%259B%25B4%25E5%25A4%259A%25E5%259B%25BE%25E7%2589%2587%2F%25E6%2596%2587%25E7%25AB%25A0%25E5%259B%25BE%25E7%2589%2587%2F%25E5%25A8%25B1%25E4%25B9%2590%25E8%2590%25A5%25E9%2594%2580.jpg'); background-size: 100% 100%;"></div>
+      <div class="mall-banner" :style="'background-repeat: no-repeat; background-image:url(' + personInfo.bannerurl_shop + '); background-size: 100% 100%;'"
+      @click.prevent.stop="linkout(personInfo.bannerhref_shop)"></div>
       <v-topnav :navIndex="pageData.navIndex" :navData="pageData.navData" @linkNav="linkMallNav"></v-topnav>
       <div class="recommended-wrap" v-show="pageData.currentTab === 'scorepay'">
         <v-scroll ref="scorepay" :loadMore="true" :loadstatus="pageData.loadstatus" @scrollEndHandle="loadMoreListData(dispatchCurrentParams())" v-if="!pageData.noData">
           <div slot="scrolllist" class="inner-wrap">
             <div class="scroll-item" v-for="item in ListData[pageData.navIndex].listArr">
-              <div class="flex-wrap">
+              <div class="flex-wrap" @click.prevent.stop="linkDetail(item.id)">
                 <div class="flex-header">
                   <div class="goodspic" :style="'background-image:url(' + item.firstimg + '); background-size:cover; background-repeat: no-repeat;'"></div>
                 </div>
@@ -19,9 +20,9 @@
                       <p>有效期至{{item.endtime}}</p>
                       <p>仅限{{item.scene_info}}使用</p>
                     </div>
-                    <div class="buybtn">
-                      <button type="button" @click.prevent.stop="linkDetail(item.id)">立即兑换</button>
-                    </div>
+                    <!--<div class="buybtn">-->
+                      <!--<button type="button">立即兑换</button>-->
+                    <!--</div>-->
                   </div>
                 </div>
               </div>
@@ -34,7 +35,7 @@
         <v-scroll ref="mbdiscount" :loadMore="true" :loadstatus="pageData.loadstatus" @scrollEndHandle="loadMoreListData(dispatchCurrentParams())" v-if="!pageData.noData">
           <div slot="scrolllist" class="inner-wrap">
             <div class="scroll-item" v-for="item in ListData[pageData.navIndex].listArr">
-              <div class="flex-wrap">
+              <div class="flex-wrap" @click.prevent.stop="linkDetail(item.id)">
                 <div class="flex-header">
                   <div class="goodspic" :style="'background-image:url(' + item.firstimg + '); background-size:cover; background-repeat: no-repeat;'"></div>
                 </div>
@@ -47,9 +48,9 @@
                       <p>有效期至{{item.endtime}}</p>
                       <p>仅限{{item.scene_info}}使用</p>
                     </div>
-                    <div class="buybtn">
-                      <button type="button" @click.prevent.stop="linkDetail(item.id)">立即抢购</button>
-                    </div>
+                    <!--<div class="buybtn">-->
+                      <!--<button type="button">立即抢购</button>-->
+                    <!--</div>-->
                   </div>
                 </div>
               </div>
@@ -58,16 +59,20 @@
         </v-scroll>
         <div class="no-data" v-else>- 暂无相关折扣 -</div>
       </div>
+      <v-footer :activeIndex="activeIndex"></v-footer>
     </div>
 </template>
 <script type="text/ecmascript-6">
   import TopNav from 'components/navbar/topnav';
   import Scroll from 'components/scroll/scrollView';
+  import Footer from 'components/footer/footerMenu';
   import {getRecommendScore} from 'mock/getMocks';
+  import {mapState} from 'vuex';
     export default {
       name: 'mall-index',
       data () {
         return {
+          activeIndex: 0,
           pageData: {
             navIndex: 0,
             currentTab: 'scorepay',
@@ -103,13 +108,15 @@
       created () {
         this.init();
       },
+      computed: {
+        ...mapState(['personInfo'])
+      },
       methods: {
         init () {
           if (this.$route.query.index) {
             this.pageData.navIndex = parseInt(this.$route.query.index);
             this.linkMallNav(['mbdiscount', this.pageData.navIndex]);
           }
-
           this.generateListData(this.dispatchCurrentParams());
         },
         linkMallNav (v) {
@@ -172,11 +179,15 @@
             path: 'detail',
             query: {id}
           });
+        },
+        linkout (path) {
+          window.location.href = path;
         }
       },
       components: {
         'v-topnav': TopNav,
-        'v-scroll': Scroll
+        'v-scroll': Scroll,
+        'v-footer': Footer
       }
     };
 </script>
@@ -198,7 +209,7 @@
       left 0
       right 0
       top px2rem(390)
-      bottom px2rem(0)
+      bottom px2rem(150)
       padding 0 px2rem(24) px2rem(24) px2rem(24)
       .scrollwrap
         padding 0 px2rem(24)
@@ -236,6 +247,10 @@
                 .goods-wrap
                   font-size px2rem(20)
                   & h3
+                    width px2rem(230)
+                    overflow hidden
+                    text-overflow ellipsis
+                    white-space nowrap
                     height px2rem(60)
                     line-height px2rem(60)
                     font-size px2rem(30)

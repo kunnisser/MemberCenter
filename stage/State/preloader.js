@@ -50,8 +50,7 @@ class preloader extends Phaser.State {
     }
 
     loadImages () {
-      // static/assets/img/avator.jpg
-      this.load.image('avator', window.psObj.headimgurl);
+      this.load.image('avator', prostatus === 'development' ? '/static/assets/img/avator.jpg' : window.psObj.headimgurl);
       this.load.image('touchTex', this.path + '/static/assets/touch_show/touch_tex.png');
       this.load.image('drinkingTex', this.path + '/static/assets/drinking_show/drinking_tex.png');
       this.load.image('eatingTex', this.path + '/static/assets/eating_show/eating_tex.png');

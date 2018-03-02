@@ -26,7 +26,7 @@
               </div>
             </div>
             <div class="score-hobby">
-              <v-hobby :background="personInfo.bannerurl" :linkhref="personInfo.bannerhref">
+              <v-hobby :background="personInfo.bannerurl_score" :linkhref="personInfo.bannerhref_score">
                 <h2 slot="share-title">小积分抽大奖</h2>
                 <p slot="share-text">开启你的幸运时刻</p>
               </v-hobby>

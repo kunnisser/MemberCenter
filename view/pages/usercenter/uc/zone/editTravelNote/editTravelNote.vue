@@ -18,10 +18,12 @@
                     class="btn btn-primary"
                     :crop="false"
                     @imagechanged="hasChanged"
-                     @imageuploaded="imageUploaded"
-                    :max-file-size="5242880"
-                    :multiple="false"
-                    :multiple-size="1"
+                    @imageuploaded="imageUploaded"
+                    @errorhandle="uploadErr"
+                     :maxFileSize="819200"
+                     :multiple="false"
+                     :multipleSize="1"
+                     :compress="25"
                     :url="uploaderApi" >
                   </vue-core-image-upload>
                 </i>
@@ -151,6 +153,9 @@
             this.showMessage(!1, '图片上传失败！');
             this.descArr.splice(this.descArr.length - 1, 1);
           }
+        },
+        uploadErr (mes) {
+          this.showMessage(!1, mes);
         },
         generateRichText () {
           let rt = '';

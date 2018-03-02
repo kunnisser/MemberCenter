@@ -81,7 +81,7 @@
           autoBlur: true
         });
         if (this.pullup) {
-          this.scroll.on('touchend', () => {
+          this.scroll.on('touchEnd', () => {
             this.scroll.y <= this.scroll.maxScrollY - 50 ? this.$emit('scrollEndHandle') : (this.loadvisible = !1);
           });
           this.loadMore &&

@@ -1,7 +1,7 @@
 <template>
   <div class="uc-share">
     <h3>猜你喜欢</h3>
-    <div class="share-wrap" @click="linkout(linkhref)" :style="'background:url(' + background + ') no-repeat; background-size: 100% 100%;'">
+    <div class="share-wrap" @click="linkout(linkhref)" :style="'background-image:url(' + background + '); background-repeat: no-repeat; background-size: 100% 100%;'">
       <section class="share-text">
         <slot name="share-title"></slot>
         <slot name="share-text"></slot>

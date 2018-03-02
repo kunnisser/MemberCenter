@@ -25,16 +25,19 @@
           </div>
         </v-scroll>
       </div>
+      <v-footer :activeIndex="activeIndex"></v-footer>
     </div>
 </template>
 <script type="text/ecmascript-6">
   import {getUserOrder} from '../../../../mock/getMocks';
   import Scroll from '../../../../components/scroll/scrollView';
   import TopNav from '../../../../components/navbar/topnav';
+  import Footer from 'components/footer/footerMenu';
   export default {
       name: 'myorder',
       data () {
         return {
+          activeIndex: 4,
           pageData: {
             navIndex: 0,
             navData: [
@@ -125,7 +128,8 @@
       },
       components: {
         'v-topnav': TopNav,
-        'v-scroll': Scroll
+        'v-scroll': Scroll,
+        'v-footer': Footer
       }
     };
 </script>
@@ -137,7 +141,7 @@
       position absolute
       width px2rem(694)
       top px2rem(116)
-      bottom 0
+      bottom px2rem(150)
       .order-scroll
         padding-top px2rem(10)
         padding-bottom px2rem(20)

@@ -17,7 +17,7 @@
                     <div class="note-info">
                       <p>{{item.detail}}</p>
                       <div class="thumblist">
-                        <div v-for="item1 in item.pics" class="thumb-item" :style="'background: url(' + item1 + ') no-repeat center;'"></div>
+                        <div v-for="(item1, index) in item.pics" v-if="index < 3" class="thumb-item" :style="'background: url(' + item1 + ') no-repeat center;'"></div>
                       </div>
                       <div class="note-tips">
                         <div class="tip-bar">
@@ -45,9 +45,11 @@
               class="btn btn-primary"
               :crop="false"
               @imageuploaded="uploadPic"
-              :max-file-size="5242880"
+              @errorhandle="uploadErr"
+              :maxFileSize="819200"
               :multiple="true"
-              :multiple-size="9"
+              :multipleSize="9"
+              :compress="25"
               :url="uploaderApi" >
             </vue-core-image-upload></div>
                 <div class="photos-wrap" v-if="pageData.picNodata">
@@ -57,9 +59,11 @@
                       ref="uploader"
                       :crop="false"
                       @imageuploaded="uploadPic"
-                      :max-file-size="5242880"
+                      @errorhandle="uploadErr"
+                      :maxFileSize="819200"
                       :multiple="true"
-                      :multiple-size="9"
+                      :multipleSize="9"
+                      :compress="25"
                       :url="uploaderApi" >
                     </vue-core-image-upload>
                     <i class="icon-plus"></i>
@@ -117,7 +121,7 @@
             <v-scroll v-else ref="feedback" :loadMore="true" :loadstatus="pageData.loadstatus" @scrollEndHandle="loadFeedMore">
               <div slot="scrolllist" class="feed-list" v-show="pageData.feedArr.length">
                 <div class="feed-item" v-for="(item, index) in pageData.feedArr">
-                  <h3 :class="index === pageData.respIndex ? 'resp': ''" @click.prevent.stop="toggleResp(index, $event)">{{(index + 1) + ' ' +item.detail}}<i v-if="item.is_reply" class="icon-check-circle"></i></h3>
+                  <h3 :class="index === pageData.respIndex ? 'resp': ''" @click.prevent.stop="toggleResp(index, $event)">{{(index + 1) + '、' +item.detail}}<i v-if="item.is_reply" class="icon-check-circle"></i></h3>
                   <div :class="'resp-wrap ' + (index === pageData.respIndex ? 'open' : '')" v-if="item.is_reply">
                     <p>{{item.reply}}</p>
                   </div>
@@ -145,20 +149,23 @@
       <v-tips :popType="popType" :delay="!1" :open="tipvisible" @close="closetips">
         <div slot="tipmes" :class="'default' + (commitFlag ? '' : ' warning')">{{tiptext}}</div>
       </v-tips>
+      <v-footer :activeIndex="activeIndex"></v-footer>
     </div>
 </template>
 <script type="text/ecmascript-6">
-  import {basePath, prostatus} from '../../utils/env';
+  import {basePath} from '../../utils/env';
   import TopNav from 'components/navbar/topnav';
   import {getTravelNote, thumbUpTravelNote, thumbUpPhotos, inquirePhotos, addUserFeed, getAllFeed} from 'mock/getMocks';
   import Scroll from 'components/scroll/scrollView';
   import ImageUploader from 'vue-core-image-upload';
   import Tips from 'components/pop/poptips';
+  import Footer from 'components/footer/footerMenu';
   import xss from 'xss';
     export default {
       name: 'myzone',
       data () {
         return {
+          activeIndex: 1,
           pageData: {
             userid: '',
             username: '',
@@ -203,7 +210,7 @@
           tipvisible: !1,
           commitFlag: !1,
           tiptext: '',
-          uploaderApi: basePath + (prostatus === 'development' ? '/api/photoWeb/savePhoto' : '/xxgmc/photoWeb/savePhoto')
+          uploaderApi: basePath + '/xxgmc/photoWeb/savePhoto'
         };
       },
       created () {
@@ -253,7 +260,7 @@
             this.pageData.notelist = this.pageData.notelist.concat(this.pageData.currentNoteArr);
             this.$nextTick(() => {
               this.$refs.travelNote && this.$refs.travelNote.refresh();
-              this.$refs[this.pageData.currentTab] && this.$refs[this.pageData.currentTab].scroll && this.$refs[this.pageData.currentTab].scroll.scrollTo(0, 0);
+              index === 1 && this.$refs[this.pageData.currentTab] && this.$refs[this.pageData.currentTab].scroll && this.$refs[this.pageData.currentTab].scroll.scrollTo(0, 0);
             });
             this.pageData.noteNodata = !this.pageData.notelist.length;
           } catch (e) {
@@ -367,6 +374,10 @@
           } catch (e) {
             this.showMessage('网络连接失败！');
           }
+        },
+        uploadErr (res) {
+          this.commitFlag = !1;
+          this.showMessage(res);
         },
         loadMorePhotos () {
           this.pageData.tapNav = !1;
@@ -486,7 +497,8 @@
         'v-topnav': TopNav,
         'v-scroll': Scroll,
         'vue-core-image-upload': ImageUploader,
-        'v-tips': Tips
+        'v-tips': Tips,
+        'v-footer': Footer
       }
     };
 </script>
@@ -499,7 +511,7 @@
       width 100%
       top px2rem(116)
       left 0
-      bottom 0
+      bottom px2rem(150)
       padding px2rem(28)
       .zone-travelNote
         position relative
@@ -517,7 +529,7 @@
           position absolute
           z-index 999
           right px2rem(10)
-          bottom px2rem(10)
+          bottom px2rem(90)
         .noteList-zone
           width 100%
           height 100%
@@ -616,7 +628,7 @@
             position absolute
             z-index 999
             right px2rem(10)
-            bottom px2rem(10)
+            bottom px2rem(120)
             .g-core-image-upload-btn
               width 100%
               height 100%

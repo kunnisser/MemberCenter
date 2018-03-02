@@ -93,7 +93,7 @@ class mainMenu extends Phaser.State {
         this.careForDogs('touch').then((e) => {
           this.bottomNav.children[0].inputEnabled = !0;
           e === '1' &&
-            (this.touch.armatureDisplay.animation.play('touchOne', 3),
+            (this.touch.armatureDisplay.animation.play('touchOne', 0),
               this.touch.timebar.visible = !0,
               this.touch.timeText.visible = !0,
               this.touch.bootTime(this.touchDelayTime));
@@ -151,6 +151,7 @@ class mainMenu extends Phaser.State {
         if (this.waterDelayTime) {
           this.drinking.timebar.visible = !0;
           this.drinking.timeText.visible = !0;
+          this.drinking.bootTime(this.waterDelayTime);
         } else {
           this.drinking.timebar.visible = !1;
           this.drinking.timeText.visible = !1;
@@ -159,7 +160,7 @@ class mainMenu extends Phaser.State {
             e === '1' &&
             (this.drinking.timebar.visible = !0,
               this.drinking.timeText.visible = !0,
-              this.drinking.armatureDisplay.animation.play('drinkWater', 1),
+              this.drinking.armatureDisplay.animation.play('drinkWater', 0),
               this.drinking.bootTime(this.waterDelayTime));
           }, this);
         }
@@ -177,6 +178,7 @@ class mainMenu extends Phaser.State {
           this.eatingDelayTime = resp.data.data['next_food_time'] < 0 ? 0 : resp.data.data['next_food_time'];
           this.waterDelayTime = resp.data.data['next_water_time'] < 0 ? 0 : resp.data.data['next_water_time'];
           this.touchDelayTime = resp.data.data['next_touch_time'] < 0 ? 0 : resp.data.data['next_touch_time'];
+          window.vcom.$store.state.ucInfo.myscore = resp.data.data.score;
           return resp.data.code;
         } else if (resp.data.code === 'not_to_time') {
           window.vcom.showMessage(!1, resp.data.msg);
@@ -185,7 +187,7 @@ class mainMenu extends Phaser.State {
         }
       } catch (e) {
         console.log(e);
-        window.vcom.showMessage(!1, '喂食失败，请重试');
+        window.vcom.showMessage(!1, '网络请求失败，请重试');
       }
     }
 

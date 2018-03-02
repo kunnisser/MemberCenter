@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <v-hobby :background="personInfo.bannerurl" :linkhref="personInfo.bannerhref">
+      <v-hobby :background="personInfo.bannerurl_index" :linkhref="personInfo.bannerhref_index">
           <h2 slot="share-title">分享好友</h2>
           <p slot="share-text">999积分等你来拿</p>
       </v-hobby>

@@ -162,13 +162,13 @@
       box-sizing content-box
       width px2rem(620)
       height px2rem(490)
-      border px2rem(6) solid #fff
+      border px2rem(6) solid #5e7382
       border-radius px2rem(10)
       overflow hidden
       .dp-toolbar
         width 100%
         display flex
-        background-color #fff
+        background-color #fcfcfc
         font-size px2rem(26)
         height px2rem(90)
         line-height px2rem(90)
@@ -183,7 +183,7 @@
         display flex
         width px2rem(620)
         height px2rem(400)
-        background-color #81add4
+        background-color #00a0e9
         font-size px2rem(30)
         color #fff
         overflow hidden

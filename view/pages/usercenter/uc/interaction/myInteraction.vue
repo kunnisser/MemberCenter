@@ -247,6 +247,8 @@
                   color #474747
                   & span
                     margin-right px2rem(60)
+                    & i
+                      color #474747
                   .unshare
                     color #ccc
                   .shared

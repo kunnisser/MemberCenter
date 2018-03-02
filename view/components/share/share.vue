@@ -60,7 +60,6 @@
               ]
             });
             wx.error((res) => {
-              console.log(res);
               this.showMessage('验证失败' + res);
             });
             wx.onMenuShareTimeline({

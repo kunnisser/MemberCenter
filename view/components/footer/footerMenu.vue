@@ -21,24 +21,24 @@
         menu: [
           {
             name: '积分商城',
-            path: 'mall',
+            path: '/mall',
             icon: 'nav-shop'
 
           },
           {
             name: '会员社区',
-            path: 'zone',
+            path: '/zone',
             icon: 'nav-comments'
           },
           {
             name: '首页',
-            path: 'home',
+            path: '/home',
             icon: 'nav-home'
           },
 
           {
             name: '会员日',
-            path: 'md',
+            path: '/md',
             icon: 'nav-cake'
           },
           {

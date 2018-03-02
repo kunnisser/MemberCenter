@@ -13,7 +13,8 @@
               <div class="gd-info">
                 <h2>{{pageData.goodsDetail.title}}<span v-if="pageData.goodsDetail.isselfdeliver">需自提</span></h2>
                 <div class="gd-price">
-                  <b>{{pageData.goodsDetail.score}}</b>积分
+                  <b>{{pageData.goodsDetail.score}}</b>积分 +
+                  <span>¥ {{pageData.goodsDetail.money}}</span>
                   <div class="gd-original">市场参考价：<span>{{pageData.goodsDetail.orig}}</span>元</div>
                 </div>
               </div>
@@ -148,6 +149,7 @@
           & h2
             font-size px2rem(30)
             font-weight bold
+            line-height px2rem(34)
             & span
               margin-left px2rem(36)
               font-size px2rem(20)

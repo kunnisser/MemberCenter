@@ -133,7 +133,7 @@
             position relative
             width 100%
             & h2
-              font-size px2rem(40)
+              font-size px2rem(34)
               height px2rem(64)
               line-height px2rem(64)
             & p
@@ -168,6 +168,10 @@
               display flex
               justify-content center
               align-items center
+              .header-wrap
+                width px2rem(180)
+                text-align center
+                overflow hidden
             .content
               height px2rem(174)
               flex 1
@@ -176,6 +180,7 @@
               padding px2rem(28)
               & h2
                 margin-bottom px2rem(8)
+                font-size px2rem(30)
               & p
                 font-size px2rem(18)
               .timer

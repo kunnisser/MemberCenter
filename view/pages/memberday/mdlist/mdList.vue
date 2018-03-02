@@ -74,11 +74,13 @@
           if (Resp.data.code === '1') {
             currentArr = Resp.data.data.item.length ? Resp.data.data.item : [];
             Resp.data.data.total && (this.totalPage = Resp.data.data.total);
+            Resp.data.data.share_score && (this.share_score = Resp.data.data.share_score);
             Resp.data.data['my_share_num'] === undefined || (this.sharedNum = Resp.data.data['my_share_num'].toString());
+            currentIndex === 1 && (listArr = []);
             listArr = listArr.concat(currentArr);
             this.listData.currentArr = currentArr;
             this.listData.listArr = listArr;
-            this.$emit('getApiData', {'list': this.listData.listArr, 'total': this.totalPage, 'num': this.sharedNum});
+            this.$emit('getApiData', {'list': this.listData.listArr, 'total': this.totalPage, 'num': this.sharedNum, 'share_score': this.share_score});
             this.$nextTick(() => {
               this.$refs.mdscroll && this.$refs.mdscroll.refresh();
             });
@@ -121,7 +123,7 @@
     position absolute
     width px2rem(694)
     top px2rem(140)
-    bottom px2rem(28)
+    bottom px2rem(178)
     background-color #fff
     border-radius px2rem(10)
     overflow hidden

@@ -161,8 +161,8 @@
                     <div class="card-flex">
                       <div class="header">
                         <div class="header-wrap">
-                          <h2>{{item.goodsnick}}</h2>
-                          <p>{{item.kindname}}</p>
+                          <h2>{{item.goodsname}}</h2>
+                          <p>{{item.cardkind}}</p>
                         </div>
                       </div>
                       <div class="content">
@@ -187,6 +187,11 @@
       <v-tips :popType="popType" :delay="!1" :open="tipvisible" @close="closetips">
         <div slot="tipmes" :class="'default' + (commitFlag ? '' : ' warning')">{{tiptext}}</div>
       </v-tips>
+      <v-confirm :open="cmvisible" @close="closecm">
+        <div slot="tipscf">
+          <p>{{cmtext}}</p>
+        </div>
+      </v-confirm>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -194,6 +199,7 @@
   import Scroll from 'components/scroll/scrollView';
   import Datepicker from 'components/datepicker/datepicker';
   import Tips from 'components/pop/poptips';
+  import ConfirmTips from 'components/pop/popcomfirm';
     export default {
       name: 'go-wrap',
       data () {
@@ -215,6 +221,8 @@
           popType: 'center',
           tipvisible: !1,
           tiptext: '',
+          cmvisible: !1,
+          cmtext: '',
           commitFlag: '',
           checkArr: [],
           selectDate: [],
@@ -329,7 +337,8 @@
             this.commitData['id_card_no'] = this.pageData.idnum;
             this.commitData['usedate'] = this.selectDate[0] + '-' + this.selectDate[1] + '-' + this.selectDate[2];
             this.commitData['num'] = this.pageData.inputNum;
-            this.addNewOrder();
+            this.cmvisible = !0;
+            this.cmtext = '确认提交么？';
           }
         },
         // 提交订单
@@ -453,12 +462,17 @@
               id: this.pageData.orderInfo.orderid
             }
           });
+        },
+        closecm (v) {
+          this.cmvisible = !1;
+          v && this.addNewOrder();
         }
       },
       components: {
         'v-datepicker': Datepicker,
         'v-scroll': Scroll,
-        'v-tips': Tips
+        'v-tips': Tips,
+        'v-confirm': ConfirmTips
       }
     };
 </script>
@@ -523,7 +537,6 @@
               flex 1
               padding-left px2rem(56)
               & h3
-                height px2rem(50)
                 line-height px2rem(50)
                 font-weight bold
                 font-size px2rem(34)

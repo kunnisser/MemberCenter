@@ -27,7 +27,7 @@
             </h3>
             <div class="sign-day">已连续签到<span>{{ucInfo.signday}}</span>天, 连签7天领福利！</div>
             <div class="sign-wrap">
-              <div class="jjd-pointer" :style="'left: ' + parseFloat((ucInfo.signday < 2 ? 0 : ucInfo.signday - 1) * 1.2 - 0.32)  + 'rem;'"></div>
+              <div ref="pointer" :class="'jjd-pointer' + (signing ? ' jump' : '')" :style="'left: ' + parseFloat((ucInfo.signday < 2 ? 0 : ucInfo.signday - 1) * 1.2 - 0.32)  + 'rem;'"></div>
               <div class="sign-flex" v-for="(item, index) in signDayArr">
                 <i :class="index < ucInfo.signday ? 'active' : ''" @click="sign(index)">{{index + 1}}天</i>
               </div>
@@ -73,7 +73,8 @@
           popType: 'center',
           tiptext: '',
           tipvisible: !1,
-          signDayArr: new Array(7)
+          signDayArr: new Array(7),
+          signing: !1
         };
       },
       created () {
@@ -114,7 +115,11 @@
             } else {
               this.$store.state['ucInfo'].signed = !0;
               this.$store.state['ucInfo'].signday++;
-              this.$store.state['ucInfo'].myscore = resp.data.score;
+              this.signing = !0;
+              setTimeout(() => {
+                this.signing = !1;
+              }, 800);
+              this.$store.state['ucInfo'].myscore = resp.data.data;
               this.setPoptips('签到成功！');
             }
             console.log(resp);
@@ -280,13 +285,15 @@
               top px2rem(-4)
               z-index 99
               transition left 200ms ease-in
+              &.jump
+                animation tada 800ms ease
             .coin-tip
-              width px2rem(100)
-              height px2rem(54)
+              width px2rem(140)
+              height px2rem(74)
               background url("../../assets/image/coin-tip.png") no-repeat
               background-size 100% 100%
               position absolute
-              right 0
+              right px2rem(-20)
               top px2rem(-80)
             .sign-flex
               display flex
@@ -403,6 +410,7 @@
               z-index 8
               margin 0 auto
               bottom px2rem(20)
+
   @keyframes shake {
     0% {
       transform rotatey(0deg)
@@ -436,5 +444,76 @@
     to {
       transform rotate(360deg)
     }
+  }
+
+  @-webkit-keyframes tada {
+    from {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+
+    10%,
+    20% {
+      -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+
+    40%,
+    60%,
+    80% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+
+    to {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+  @keyframes tada {
+    from {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+
+    10%,
+    20% {
+      -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+
+    40%,
+    60%,
+    80% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+
+    to {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+  .tada {
+    -webkit-animation-name: tada;
+    animation-name: tada;
   }
 </style>

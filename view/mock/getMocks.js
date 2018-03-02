@@ -14,7 +14,7 @@ let getMock = (url) => {
   return (params) => Axios.get(url, {params: params,
     timeout: 8000,
     headers: {
-    xxgmc_jwt_token: loginToken
+    xxgmc_jwt_token: prostatus === 'development' ? 'eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50SWQiOiJvT2lrY3Y4V2JVam43ODJpN1Y2czBIU1hBekdnIn0.0csKHuOR4n0jALwC3rcBKUdhqwE1HifCHTnWV1Xog4Q' : loginToken
   }
   });
 };
@@ -51,7 +51,7 @@ let postMock = (url) => {
 //     });
 // };
 
-const ApiPath = basePath + (prostatus === 'development' ? '/api' : '/xxgmc');
+const ApiPath = basePath + (prostatus === 'development' ? '/xxgmc' : '/xxgmc');
 
 const getUserData = getMock(ApiPath + '/index/userinfo');
 const register = postMock(ApiPath + '/register');
