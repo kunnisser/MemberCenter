@@ -2,7 +2,7 @@
 #### Preview
 ---
 [会员中心](http://www.me2u.com.cn/MemberCenter)
-![](https://github.com/kunnisser/vmusic/blob/master/assets/img/preshow.png)
+![](https://github.com/kunnisser/MemberCenter/blob/master/view/assets/img/preshow.png)
 #### Builds
 ---
 ##### vue
